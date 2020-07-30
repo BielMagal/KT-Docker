@@ -5,7 +5,7 @@ const App = () => {
   const [items, setItems] = useState([]);
   const [error, setError] = useState(false);
   useEffect(() => {
-    fetch("http://127.0.0.1:8080/item")
+    fetch("http://127.0.0.1:8080/items")
       .then(res => res.json())
       .then(
         result => result.error

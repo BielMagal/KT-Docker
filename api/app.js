@@ -10,7 +10,7 @@ const PORT = 8080;
 
 app.use(cors());
 
-app.get('/item', async (req, res) => {
+app.get('/items', async (req, res) => {
     const connection = mysql.createConnection({
       host     : containerized() ? 'host.docker.internal' : '127.0.0.1',
       port     : '3307',
