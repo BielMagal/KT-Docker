@@ -13,3 +13,5 @@ db:
 front:
     build: docker build -t front ./front
     run: docker run -p80:80 front
+
+compose: docker-compose up
