@@ -11,17 +11,7 @@ const PORT = 8080;
 
 app.use(cors());
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-
-app.use('/health', (req, res, next) => {
-  res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
-  res.status(200).send('ok');
-  next();
-});
-
 app.get('/item', async (req, res) => {
-  try {
     const connection = mysql.createConnection({
       host     : containerized() ? 'host.docker.internal' : '127.0.0.1',
       port     : '3307',
@@ -31,15 +21,12 @@ app.get('/item', async (req, res) => {
     });
 
     connection.query('SELECT * FROM ITEM', function(error, results){
-        connection.end();
         if(error) 
-          res.status(500).send(error);
+          res.json({error});
         else
-          res.status(200).send(results);
+          res.json({items: results});
+        connection.end();
     });
-  } catch (err) {
-    res.status(500).send(err);
-  }
 });
 
 app.listen(PORT, () => {
